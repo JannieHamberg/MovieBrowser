@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from 'react';
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-//import LatestCarousel from './LatestCarousel';
+import ControlledCarousel from "./components/CarouselItem";
 import AboutView from "./components/AboutView";
 import SearchView from './components/SearchView';
 import MovieView from './components/MovieView';
@@ -32,6 +32,7 @@ useEffect(() => {
       <Switch>
         <Route path="/" exact>
           <Home />
+          <ControlledCarousel />
         </Route>
         <Route path="/about" component={AboutView} />
         <Route path="/search">
