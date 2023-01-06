@@ -2,33 +2,49 @@ import React from 'react'
 import './CarouselItem.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { useState } from 'react'; 
-import {render} from 'react-dom';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-function ControlledCarousel() {
-  const [index, setIndex] = useState(0);
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
 
-  return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
+const CarouselItem = () => {
+    const { id } = useParams()
+    const [movieDetails, setMovieDetails ] = useState({})
+    
+
+    useEffect(() => {
+        fetch(`
+        https://api.themoviedb.org/3/movie/${id}?api_key=03b494ebe50361cd87fe561b366ff9d4&language=en-US`)
+        .then(response => response.json())
+        .then(data => {
+            setMovieDetails(data)
+            
+        })
+    }, [id])
+
+    function renderMovieDetails() {
+        if(movieDetails) {
+            
+            const posterPath = `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+            const backdropUrl =`https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`
+           return (
+            <>
+    <Carousel fade className='CarouselMain'>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=First slide&bg=373940"
+          className="d-block CarouselImage"
+          src={posterPath}
           alt="First slide"
         />
         <Carousel.Caption>
-          <h3>First slide label</h3>
+          <h3>{movieDetails.original_title}</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Second slide&bg=282c34"
+          className="d-block CarouselImage"
+          src={posterPath}
           alt="Second slide"
         />
 
@@ -39,8 +55,8 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=20232a"
+          className="d-block CarouselImage"
+          src={posterPath}
           alt="Third slide"
         />
 
@@ -52,8 +68,16 @@ function ControlledCarousel() {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
-  );
+    </>
+  )
 }
+ 
+}
+return renderMovieDetails()
+} 
 
-render(<ControlledCarousel />);
-export default ControlledCarousel;
+
+
+
+
+export default CarouselItem;

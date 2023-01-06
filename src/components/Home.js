@@ -1,11 +1,11 @@
 import Hero from "./Hero";
-import ControlledCarousel from './CarouselItem';
+import CarouselItem from './CarouselItem';
 
 const Home = () => {
   return (
     <>
       <Hero text="React Movie Browser" />
-     <ControlledCarousel />
+     <CarouselItem />
     </>
   );
 };

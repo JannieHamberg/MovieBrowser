@@ -35,7 +35,8 @@ const SearchView = ({ keyword, searchResults}) => {
     return <MovieCard movie={obj} key={i} />
   })
 
-  return (
+  if(resultsHtml.length>0){
+    return(
     <>
       <Hero text={title} />
       {resultsHtml &&
@@ -46,9 +47,17 @@ const SearchView = ({ keyword, searchResults}) => {
       </div>
       }
       </>
-  );
-    };
-  
+  )
+    }
+  else if(resultsHtml.length===0){
+    return(
+      <>
+      <Hero text="No results found" />
+      <p className="m-5"> Woops, seems we can't find any movie by that name.</p>
+      </>
+    )
+  }
+}
 
 
 export default SearchView;
